@@ -43,3 +43,13 @@ A virtual machine behaves like a separate computer with its own operating system
 ### Key takeaway
 
 Kali uses two separate network interfaces: `eth0` provides Internet access through NAT, while `eth1` is used for communication inside the isolated LAB-NET. Traffic to devices in the same subnet, such as `10.10.10.20`, does not need to pass through the default gateway.
+
+### Additional completed
+
+- Created Windows 11 victim VM
+- Assigned static ip 10.10.10.20/24
+- Verified bidirectional connectivity between Kali and Windows victim
+
+### Key Takeaway
+
+Devices in the same subnet communicates directly with each other. Kali sends traffic to 10.10.10.20 through eth1 because the routing table associates 10.10.10.0/24 with the LAB-NET interface.
