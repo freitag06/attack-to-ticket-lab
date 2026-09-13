@@ -53,3 +53,39 @@ Kali uses two separate network interfaces: `eth0` provides Internet access throu
 ### Key Takeaway
 
 Devices in the same subnet communicates directly with each other. Kali sends traffic to 10.10.10.20 through eth1 because the routing table associates 10.10.10.0/24 with the LAB-NET interface.
+
+## Day 3
+
+### Completed
+
+- Created Ubuntu Server VM for Wazuh
+- Configured Ubuntu in LAB-NET as 10.10.10.30/24
+- Verified connectivity between Kali, Windows victim and Ubuntu
+- Configured and tested SSH
+- Installed Wazuh all-in-one
+- Verified Wazuh Manager, Indexer and Dashboard
+- Installed Wazuh Agent on Windows victim
+- Connected Windows victim to Wazuh Manager
+- Installed Sysmon on Windows
+- Configured Wazuh Agent to collect Sysmon events
+- Verified Sysmon Event ID 1 in Wazuh
+- Performed first PowerShell discovery test
+- Completed first basic SOC alert triage
+
+### Learned
+
+- Difference between a host, service and port
+- Basic SSH and Linux service management
+- How Wazuh components work together
+- Difference between an event and an alert
+- Role of Wazuh Agent
+- Role of Sysmon as a telemetry source
+- Windows process creation telemetry
+- Meaning of Image, CommandLine and ParentImage
+- Basic SOC alert triage and contextual investigation
+
+### Key takeaway
+
+Security monitoring is a pipeline. Sysmon generates endpoint telemetry, Windows stores it in Event Logs, Wazuh Agent collects it, Wazuh Manager analyzes it using detection rules, and the analyst investigates the resulting events and alerts in the dashboard.
+
+An alert alone does not prove malicious activity. Context is required to determine whether activity is benign, suspicious or malicious.
