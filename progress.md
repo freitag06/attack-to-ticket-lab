@@ -89,3 +89,46 @@ Devices in the same subnet communicates directly with each other. Kali sends tra
 Security monitoring is a pipeline. Sysmon generates endpoint telemetry, Windows stores it in Event Logs, Wazuh Agent collects it, Wazuh Manager analyzes it using detection rules, and the analyst investigates the resulting events and alerts in the dashboard.
 
 An alert alone does not prove malicious activity. Context is required to determine whether activity is benign, suspicious or malicious.
+
+## Day 4
+
+### Completed
+
+- Enabled Sysmon network connection logging
+- Generated controlled network traffic from Windows victim to Wazuh
+- Collected and analyzed Sysmon Event ID 1 and Event ID 3
+- Correlated process creation events with network activity
+- Built the first event timeline
+- Investigated incomplete telemetry where Sysmon reported `<unknown process>`
+- Used ProcessId and timestamps to correlate related events
+
+### Learned
+
+- Difference between process creation telemetry and network connection telemetry
+- Sysmon Event ID 1 represents process creation
+- Sysmon Event ID 3 represents network connections
+- How ProcessId, ProcessGuid and timestamps can be used for event correlation
+- Why a single log entry may not provide enough context
+- How to reconstruct a sequence of activity from multiple events
+- Why PowerShell activity must be evaluated in context rather than automatically classified as malicious
+- How source IP, destination IP, destination port and transport protocol describe network activity
+
+### Timeline
+
+- 08:26:13 - powershell.exe started
+- 08:26:13 - whoami.exe spawned by powershell.exe
+- 08:26:13 - HOSTNAME.exe spawned by powershell.exe
+- 08:26:13 - curl.exe spawned by powershell.exe
+- 08:26:14 - TCP connection observed from 10.10.10.20 to 10.10.10.30:443
+
+### Analysis
+
+The sequence shows PowerShell performing basic host and user discovery before launching curl.exe. Immediately afterwards, the Windows victim established a TCP connection to the Wazuh server on port 443.
+
+The network event did not contain complete process metadata and reported an unknown process. Correlation with nearby process creation events was therefore required to reconstruct the activity.
+
+This sequence is not proof of malicious activity, but it demonstrates behavior that could require further investigation in a real SOC environment.
+
+### Key takeaway
+
+Individual events can be incomplete or ambiguous. Correlating process, user, command-line and network telemetry produces a much more reliable picture of what happened on an endpoint.
