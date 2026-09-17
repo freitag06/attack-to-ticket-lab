@@ -132,3 +132,44 @@ This sequence is not proof of malicious activity, but it demonstrates behavior t
 ### Key takeaway
 
 Individual events can be incomplete or ambiguous. Correlating process, user, command-line and network telemetry produces a much more reliable picture of what happened on an endpoint.
+
+## Day 5
+
+### Completed
+
+- Executed a controlled discovery sequence on the Windows victim
+- Collected related Sysmon process creation events
+- Reviewed the same activity in Wazuh Threat Hunting
+- Identified the purpose of each discovery command
+- Mapped observed behavior to MITRE ATT&CK techniques
+- Compared benign administrative use with suspicious use
+- Created the first MITRE discovery chain for the lab
+
+### Discovery chain
+
+- `whoami` → T1033 – System Owner/User Discovery
+- `hostname` → T1082 – System Information Discovery
+- `Get-LocalUser` → T1087.001 – Account Discovery: Local Account
+- `ipconfig` → T1016 – System Network Configuration Discovery
+- `Get-NetTCPConnection` → T1049 – System Network Connections Discovery
+
+### Learned
+
+- Difference between MITRE ATT&CK tactics and techniques
+- How normal system commands can represent attacker behavior depending on context
+- Why a single discovery command is usually weak evidence
+- Why several discovery actions executed close together can form a stronger behavioral pattern
+- How command-line context, parent process, user, timing and network activity influence triage
+- How ATT&CK provides a common language for describing observed behavior
+- How MITRE ATT&CK can support detection engineering and coverage analysis
+- Difference between an external executable and a PowerShell cmdlet executed inside an existing PowerShell process
+
+### Key takeaway
+
+Individual commands such as `whoami` or `ipconfig` are not malicious by themselves. Their analytical value increases when they are correlated with other discovery activity, unusual users, suspicious parent processes or network behavior.
+
+MITRE ATT&CK helps translate raw commands and events into structured attacker behavior that can be used during investigation and detection engineering.
+
+### Time
+
+~60 min
